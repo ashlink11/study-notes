@@ -472,6 +472,618 @@ print('prob a team has less skill than bulls', bulls_stat_1)
 
 
 
+import pandas as pd
+import numpy as np
+
+# create 50 randomly chosen values from a normal distribution. (arbitrarily using mean=2.48 and standard deviation=0.500) 
+diameters_sample1 = np.random.normal(2.48,0.500,50)
+
+# convert the array into a dataframe with the column name "diameters" using pandas library
+diameters_sample1_df = pd.DataFrame(diameters_sample1, columns=['diameters'])
+diameters_sample1_df = diameters_sample1_df.round(2)
+
+# create 50 randomly chosen values from a normal distribution. (arbitrarily using mean=2.50 and standard deviation=0.750) 
+diameters_sample2 = np.random.normal(2.50,0.750,50)
+
+# convert the array into a dataframe with the column name "diameters" using pandas library
+diameters_sample2_df = pd.DataFrame(diameters_sample2, columns=['diameters'])
+diameters_sample2_df = diameters_sample2_df.round(2)
+
+# print the dataframe to see the first 5 observations (note that the index of dataframe starts at 0)
+print("Diameters data frame of the first sample (showing only the first five observations)")
+print(diameters_sample1_df.head())
+print()
+print("Diameters data frame of the second sample (showing only the first five observations)")
+print(diameters_sample2_df.head())
+
+
+from statsmodels.stats.proportion import proportions_ztest
+
+# number of observations in the first sample with diameter values less than 2.20. 
+count1 = len(diameters_sample1_df[diameters_sample1_df['diameters']<2.20])
+print('count1: ', count1)
+
+
+# number of observations in the second sample with diameter values less than 2.20. 
+count2 = len(diameters_sample2_df[diameters_sample2_df['diameters']<2.20])
+print('count2: ', count2)
+
+
+# counts Python list
+counts = [count1, count2]
+
+
+# number of observations in the first sample
+n1 = len(diameters_sample1_df)
+print('n1: ', n1)
+
+# number of observations in the second sample
+n2 = len(diameters_sample2_df)
+print('n2: ', n2)
+
+phat1 = count1/n1
+phat2 = count2/n2
+
+print('p-hat_1_: ', phat1)
+print('p-hat_2_: ', phat2)
+
+phat = (count1 + count2)/(n1 + n2)
+
+print('p-hat:', phat)
+
+# n Python list
+n = [n1, n2]
+
+# perform the hypothesis test. output is a Python tuple that contains test_statistic and the two-sided P_value.
+test_statistic, p_value = proportions_ztest(counts, n)
+
+print("test-statistic =", round(test_statistic,2))
+print("two tailed p-value =", round(p_value,4))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import scipy.stats as st
+import matplotlib.pyplot as plt
+from IPython.display import display, HTML
+
+nba_orig_df = pd.read_csv('nbaallelo.csv')
+nba_orig_df = nba_orig_df[(nba_orig_df['lg_id']=='NBA') & (nba_orig_df['is_playoffs']==0)]
+columns_to_keep = ['game_id','year_id','fran_id','pts','opp_pts','elo_n','opp_elo_n', 'game_location', 'game_result']
+nba_orig_df = nba_orig_df[columns_to_keep]
+
+# The dataframe for the assigned team is called assigned_team_df. 
+# The assigned team is the Bulls from 1996-1998.
+assigned_years_league_df = nba_orig_df[(nba_orig_df['year_id'].between(1996, 1998))]
+assigned_team_df = assigned_years_league_df[(assigned_years_league_df['fran_id']=='Bulls')]
+assigned_team_df = assigned_team_df.reset_index(drop=True)
+
+display(HTML(assigned_team_df.head().to_html()))
+print("printed only the first five observations...")
+print("Number of rows in the dataset =", len(assigned_team_df))
+
+
+
+
+# Range of years: 2013-2015 (Note: The line below selects all teams within the three-year period 2013-2015. This is not your team's dataframe.
+your_years_leagues_df = nba_orig_df[(nba_orig_df['year_id'].between(2013, 2015))]
+
+# The dataframe for your team is called your_team_df.
+# ---- TODO: make your edits here ----
+your_team_df = your_years_leagues_df[(your_years_leagues_df['fran_id']=='Jazz')]
+your_team_df = your_team_df.reset_index(drop=True)
+
+display(HTML(your_team_df.head().to_html()))
+print("printed only the first five observations...")
+print("Number of rows in the dataset =", len(your_team_df))
+
+
+
+
+
+import scipy.stats as st
+
+# Mean relative skill level of your team
+mean_elo_your_team = your_team_df['elo_n'].mean()
+print("Mean Relative Skill of your team in the years 2013 to 2015 =", round(mean_elo_your_team,2))
+
+
+# Hypothesis Test
+test_statistic, p_value = st.ttest_1samp(your_team_df['elo_n'],  1340)
+
+print("Hypothesis Test for the Population Mean")
+print("Test Statistic =", round(test_statistic,2)) 
+print("P-value =", p_value) 
+print("P-value (rounded) =", round(p_value,4))
+
+
+
+
+import scipy.stats as st
+
+# Mean points jazz
+mean_pts_jazz = your_team_df['pts'].mean()
+print("Mean pts of Jazz in the years 2013 to 2015 =", round(mean_pts_jazz,2))
+
+
+# Hypothesis Test
+test_statistic, p_value = st.ttest_1samp(your_team_df['pts'],  106)
+
+print("Hypothesis Test for the Population Mean")
+print("Test Statistic =", round(test_statistic,2)) 
+print("P-value (rounded) =", round(p_value, 4)) 
+print("P-value =", p_value) 
+
+
+
+
+from statsmodels.stats.proportion import proportions_ztest
+
+your_team_gt_102_df = your_team_df[(your_team_df['pts'] > 102)]
+
+# Number of games won when your team scores over 102 points
+counts = (your_team_gt_102_df['game_result'] == 'W').sum()
+
+# Total number of games when your team scores over 102 points
+nobs = len(your_team_gt_102_df['game_result'])
+
+p = counts*1.0/nobs
+print("Proportion of games won by your team when scoring more than 102 points in the years 2013 to 2015 =", round(p,4))
+
+
+# Hypothesis Test
+# ---- TODO: make your edits here ----
+test_statistic, p_value = proportions_ztest(counts, nobs, 0.90, prop_var=0.90)
+
+print("Hypothesis Test for the Population Proportion")
+print("Test Statistic =", round(test_statistic,2)) 
+print("P-value =", p_value)
+print("P-value (rounded) =", round(p_value,4))
+
+
+
+
+import scipy.stats as st
+
+mean_elo_n_project_team = assigned_team_df['elo_n'].mean()
+print("Mean Relative Skill of the assigned team in the years 1996 to 1998 =", round(mean_elo_n_project_team,2))
+
+mean_elo_n_your_team = your_team_df['elo_n'].mean()
+print("Mean Relative Skill of your team in the years 2013 to 2015  =", round(mean_elo_n_your_team,2))
+
+
+# Hypothesis Test
+# ---- TODO: make your edits here ----
+test_statistic, p_value = st.ttest_ind(assigned_team_df['elo_n'], your_team_df['elo_n'])
+
+print("Hypothesis Test for the Difference Between Two Population Means")
+print("Test Statistic =", round(test_statistic,2)) 
+print("P-value (rounded) =", round(p_value,4))
+print("P-value =", p_value)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import pandas as pd
+from IPython.display import display, HTML
+
+# read data from mtcars.csv data set.
+cars_df_orig = pd.read_csv("https://s3-us-west-2.amazonaws.com/data-analytics.zybooks.com/mtcars.csv")
+
+# randomly pick 30 observations from the data set to make the data set unique to you.
+cars_df = cars_df_orig.sample(n=30, replace=False)
+
+# print only the first five observations in the dataset.
+print("Cars data frame (showing only the first five observations)\n")
+display(HTML(cars_df.head().to_html()))
+
+
+
+
+import matplotlib.pyplot as plt
+
+# create scatterplot of variables mpg against wt.
+plt.plot(cars_df["wt"], cars_df["mpg"], 'o', color='red')
+
+# set a title for the plot, x-axis, and y-axis.
+plt.title('MPG against Weight')
+plt.xlabel('Weight (1000s lbs)')
+plt.ylabel('MPG')
+
+# show the plot.
+plt.show()
+
+
+
+
+import matplotlib.pyplot as plt
+
+# create scatterplot of variables mpg against hp.
+plt.plot(cars_df["hp"], cars_df["mpg"], 'o', color='blue')
+
+# set a title for the plot, x-axis, and y-axis.
+plt.title('MPG against Horsepower')
+plt.xlabel('Horsepower')
+plt.ylabel('MPG')
+
+# show the plot.
+plt.show()
+
+
+
+
+# create correlation matrix for mpg, wt, and hp. 
+# The correlation coefficient between mpg and wt is contained in the cell for mpg row and wt column (or wt row and mpg column).
+# The correlation coefficient between mpg and hp is contained in the cell for mpg row and hp column (or hp row and mpg column).
+mpg_wt_corr = cars_df[['mpg','wt','hp']].corr()
+print(mpg_wt_corr)
+
+
+
+
+from statsmodels.formula.api import ols
+
+# create the multiple regression model with mpg as the response variable; weight and horsepower as predictor variables.
+model = ols('mpg ~ wt+hp', data=cars_df).fit()
+print(model.summary())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import scipy.stats as st
+import matplotlib.pyplot as plt
+from IPython.display import display, HTML
+
+# dataframe for this project
+nba_wins_df = pd.read_csv('nba_wins_data.csv')
+
+display(HTML(nba_wins_df.head().to_html()))
+print("printed only the first five observations...")
+print("Number of rows in the dataset =", len(nba_wins_df))
+
+
+
+
+import scipy.stats as st
+
+# ---- TODO: make your edits here ----
+plt.plot(nba_wins_df['avg_elo_n'], nba_wins_df['total_wins'], 'o')
+
+plt.title('Total Number of Wins by Average Relative Skill', fontsize=20)
+plt.xlabel('Average Relative Skill')
+plt.ylabel('Total Number of Wins')
+plt.show()
+
+
+# ---- TODO: make your edits here ----
+correlation_coefficient, p_value = st.pearsonr(nba_wins_df['avg_elo_n'], nba_wins_df['total_wins'])
+
+print("Correlation between Average Relative Skill and the Total Number of Wins ")
+print("Pearson Correlation Coefficient =",  round(correlation_coefficient,4))
+print("P-value =", p_value)
+
+
+
+
+import statsmodels.formula.api as smf
+
+# Simple Linear Regression
+# ---- TODO: make your edits here ---
+model1 = smf.ols('total_wins ~ avg_elo_n', nba_wins_df).fit()
+print(model1.summary())
+
+
+
+
+import scipy.stats as st
+
+# ---- TODO: make your edits here ----
+plt.plot(nba_wins_df['avg_pts'], nba_wins_df['total_wins'], 'o')
+
+plt.title('Total Number of Wins by Average Points Scored', fontsize=20)
+plt.xlabel('Average Points Scored')
+plt.ylabel('Total Number of Wins')
+plt.show()
+
+
+# ---- TODO: make your edits here ----
+correlation_coefficient, p_value = st.pearsonr(nba_wins_df['avg_pts'], nba_wins_df['total_wins'])
+
+print("Correlation between Average Points Scored and the Total Number of Wins ")
+print("Pearson Correlation Coefficient =",  round(correlation_coefficient,4))
+print("P-value =", p_value)
+
+
+
+
+import statsmodels.formula.api as smf
+
+# Multiple Regression
+model2 = smf.ols('total_wins ~ avg_pts + avg_elo_n', nba_wins_df).fit()
+print(model2.summary())
+model4 = smf.ols('total_wins ~ avg_elo_n', nba_wins_df).fit()
+print(model4.summary())
+model3 = smf.ols('total_wins ~ avg_pts', nba_wins_df).fit()
+print(model3.summary())
+
+
+
+
+
+final_model = smf.ols('total_wins ~ avg_elo_n + avg_pts + avg_elo_differential + avg_pts_differential', nba_wins_df).fit()
+print(final_model.summary())
+
+
+# Response variable
+Y = nba_wins_df['total_wins']
+
+plt.figure(figsize = (20, 16))
+plt.tight_layout()
+
+plt.subplot(2, 2, 1)
+plt.scatter(x = nba_wins_df['avg_elo_n'], y = final_model.resid, color = 'blue', edgecolor = 'k')
+xmin = min(nba_wins_df['avg_elo_n'])
+xmax = max(nba_wins_df['avg_elo_n'])
+plt.hlines(y = 0, xmin = xmin, xmax = xmax, color = 'red', linestyle = '--')
+plt.xlabel('$X_1$', fontsize = 16)
+plt.ylabel('Residuals', fontsize = 16)
+plt.xticks(fontsize = 12)
+plt.yticks(fontsize = 12)
+plt.title('$X_1$ vs. residuals', fontsize = 24)
+
+plt.subplot(2, 2, 2)
+plt.scatter(x = nba_wins_df['avg_pts'], y = final_model.resid, color = 'blue', edgecolor = 'k')
+xmin = min(nba_wins_df['avg_pts'])
+xmax = max(nba_wins_df['avg_pts'])
+plt.hlines(y = 0, xmin = xmin, xmax = xmax, color = 'red', linestyle = '--')
+plt.xlabel('$X_2$', fontsize = 16)
+plt.ylabel('Residuals', fontsize = 16)
+plt.xticks(fontsize = 12)
+plt.yticks(fontsize = 12)
+plt.title('$X_2$ vs. residuals', fontsize = 24)
+
+plt.subplot(2, 2, 3)
+plt.scatter(x = nba_wins_df['avg_elo_differential'], y = final_model.resid, color = 'blue', edgecolor = 'k')
+xmin = min(nba_wins_df['avg_elo_differential'])
+xmax = max(nba_wins_df['avg_elo_differential'])
+plt.hlines(y = 0, xmin = xmin, xmax = xmax, color = 'red', linestyle = '--')
+plt.xlabel('$X_3$', fontsize = 16)
+plt.ylabel('Residuals', fontsize = 16)
+plt.xticks(fontsize = 12)
+plt.yticks(fontsize = 12)
+plt.title('$X_3$ vs. residuals', fontsize = 24)
+
+plt.subplot(2, 2, 4)
+plt.scatter(x = nba_wins_df['avg_pts_differential'], y = final_model.resid, color = 'blue', edgecolor = 'k')
+xmin = min(nba_wins_df['avg_pts_differential'])
+xmax = max(nba_wins_df['avg_pts_differential'])
+plt.hlines(y = 0, xmin = xmin, xmax = xmax, color = 'red', linestyle = '--')
+plt.xlabel('$X_3$', fontsize = 16)
+plt.ylabel('Residuals', fontsize = 16)
+plt.xticks(fontsize = 12)
+plt.yticks(fontsize = 12)
+plt.title('$X_4$ vs. residuals', fontsize = 24)
+plt.show()
+
+plt.figure(figsize = (8 ,5))
+plt.subplot(1, 1, 1)
+plt.scatter(x = final_model.fittedvalues, y = final_model.resid, color = 'blue', edgecolor = 'k')
+xmin = min(Y)
+xmax = max(Y)
+plt.hlines(y = 0, xmin = xmin, xmax = xmax, color = 'red', linestyle = '--')
+plt.xlabel('Fitted values', fontsize = 16)
+plt.ylabel('Residuals', fontsize = 16)
+plt.xticks(fontsize = 12)
+plt.yticks(fontsize = 12)
+plt.title('Fitted values vs. residuals final model', fontsize = 24)
+plt.show()
+
+
+import statsmodels.graphics.gofplots as smg
+
+plt.figure(figsize = (8 ,5))
+plt.subplot(1, 1, 1)
+fig = smg.qqplot(final_model.resid, line = '45', fit = 'True')
+
+plt.xlabel('Theoretical quantiles')
+plt.ylabel('Sample quantiles')
+plt.title('Q-Q plot of normalized residuals for final model')
+plt.show()
+
+plt.figure(figsize = (8 ,5))
+plt.subplot(1, 1, 1)
+plt.scatter(x = model3.fittedvalues, y = model3.resid, color = 'blue', edgecolor = 'k')
+xmin = min(Y)
+xmax = max(Y)
+plt.hlines(y = 0, xmin = xmin, xmax = xmax, color = 'red', linestyle = '--')
+plt.xlabel('Fitted values', fontsize = 16)
+plt.ylabel('Residuals', fontsize = 16)
+plt.xticks(fontsize = 12)
+plt.yticks(fontsize = 12)
+plt.title('Fitted values vs. residuals $X_2$ SLR model', fontsize = 24)
+plt.show()
+
+plt.figure(figsize = (8 ,5))
+plt.subplot(1, 1, 1)
+fig = smg.qqplot(model3.resid, line = '45', fit = 'True')
+
+plt.xlabel('Theoretical quantiles')
+plt.ylabel('Sample quantiles')
+plt.title('Q-Q plot of normalized residuals for $X_2$ SLR model')
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+import pandas as pd
+
+# read data from etf_returns.csv.
+etf_returns_df = pd.read_csv('etf_returns.csv')
+
+# print etf returns data set.
+print(etf_returns_df)
+
+
+
+
+
+import scipy.stats as st
+
+# save return data for individual sectors for input to f_oneway method.
+etf_returns_financial = etf_returns_df['financial']
+etf_returns_energy = etf_returns_df['energy']
+etf_returns_technology = etf_returns_df['technology']
+
+# print the outputs: the test statistic and the P-value.
+test_statistic, p_value = st.f_oneway(etf_returns_financial, etf_returns_energy, etf_returns_technology)
+
+print("test statistic =", test_statistic)
+print("P-value =", p_value)
+
+
+
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+import random
+
+# side-by-side boxplots require the three dataframes to be concatenated and a require variable identifying the type of ETF.
+etf_returns_financial_df = etf_returns_df[['financial']]
+etf_returns_financial_df = etf_returns_financial_df.rename(columns={"financial": "return"})
+etf_returns_financial_df['ETF'] = 'financial'
+
+etf_returns_energy_df = etf_returns_df[['energy']]
+etf_returns_energy_df = etf_returns_energy_df.rename(columns={"energy": "return"})
+etf_returns_energy_df['ETF'] = 'energy'
+
+etf_returns_technology_df = etf_returns_df[['technology']]
+etf_returns_technology_df = etf_returns_technology_df.rename(columns={"technology": "return"})
+etf_returns_technology_df['ETF'] = 'technology'
+
+# concatenate dataframes for the three ETFs.
+all_etfs_df = pd.concat((etf_returns_financial_df, etf_returns_energy_df, etf_returns_technology_df))
+
+# set a title for the plot, x-axis, and y-axis.
+plt.title('Boxplot for comparison', fontsize=20) 
+
+# prepare the boxplot.
+sns.boxplot(x="ETF",y="return",data=all_etfs_df)
+
+# show the plot.
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
