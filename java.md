@@ -103,6 +103,8 @@ true, false, null (for literals)
 5. left to right
 ```
 
+## data types
+
 - use 0.0, 1.0, etc. for doubles (floats)
 - floating-point number: real number with a decimal point that can float in the number
 - floating-point literal: number with a fractional part (e.g. 0.0, 1.0)
@@ -120,6 +122,8 @@ true, false, null (for literals)
 - one bit for sign, some bits for mantissa and some for exponent
 - overflow with floating-point results in infinity
   
+
+## standard library features
 
 ```java
 import java.util.Random;
@@ -156,3 +160,40 @@ int phoneNum = 1365551212;
 int tmpVal = phoneNum / 10000; // / 10000 shifts right by 4, so 136555. 
 int prefixNum = tmpVal % 1000; // % 1000 gets the right 3 digits, so 555.
 ```
+
+## type conversions
+
+- implicit converstion (automatic)
+- type casting: explicit conversion: precede an expression with (type)
+- `avgKidsPerFamily = (double)(kidsInFamily1 + kidsInFamily2) / (double)numFamilies`
+
+## more types
+
+- char: character literal
+- `myChar = scnr.next().charAt(0);`
+- ASCII standard (C/C++) 8 bits
+- Unicode (Java, etc.) 16 bits
+- integer literal
+- escape sequences: `\n \t \' \" \\`
+- compiler treats escape sequences as single characters with one ASCII value
+
+```java
+      a = scnr.next().charAt(0);
+      b = scnr.next().charAt(0);
+      c = scnr.next().charAt(0);
+```
+
+- string literal 
+- String data type is an object
+- `userName = "Sarah";`, not `userName = new String("Sarah");`
+- whitespace character: spaces, tabs, newlines
+- `scnr.next()` omit first whitespace then gets chars until next whitespace, e.g. will leave a newline char at the end of the line bc only scans to the last char; it will skip over newlines too to the next line
+- `scnr.nextLine()` gets entire line including leading spaces ; if after a `next()`, get the rest of the line; remember it doesn't skip leading whitespace, so sometimes the rest of the line will just be a newline; if it gets a whole line though it consumes the newline at the end
+
+## overflow
+
+- compiler message: "possible loss of precision"
+- be careful of intermediate calculations
+
+## exceptions
+- InputMismatchException
