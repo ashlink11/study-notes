@@ -1,3 +1,4 @@
+# chapter 1 notes
 
 ```java
 import java.util.Scanner;
@@ -197,3 +198,20 @@ int prefixNum = tmpVal % 1000; // % 1000 gets the right 3 digits, so 555.
 
 ## exceptions
 - InputMismatchException
+
+
+
+# chapter 2 notes
+
+terminology:
+- void method
+- incremental design (using method stubs which return 0)
+- modular design
+- stack frame (holds local vars)
+  - call & return are push and pop
+  - arguments are copied to the parameters and become local variables; invoking a method also stores a return address to jump back to
+- class scope: a "field" is the name for a class member variable
+- method scope: local variables and actually entire class too
+- side effects: if a method updates a field
+- access specifiers (e.g. private, protected) are for outside classes
+- public class: other classes can access methods and actually also fields
