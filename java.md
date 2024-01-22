@@ -215,3 +215,79 @@ terminology:
 - side effects: if a method updates a field
 - access specifiers (e.g. private, protected) are for outside classes
 - public class: other classes can access methods and actually also fields
+- abstraction: aka information hiding and encapsulation. lower-level internal details are hidden. 
+- abstract data type (ADT): a data type whose creation and update are constrained to specific well-defined operations. a class can be used to implement an ADT #todo: review more
+  - which abstractions would a user understand?
+  - getters and setters are reasonable but access to internal variables is not encapsulation because there's more risk involved with the wrong types and perhaps data races, idk
+- class member variables exist and so do class' public member methods
+- classes define a new type! omg of course! and can be used to create objects
+- `.` is the member access operator
+- reference variable: refers to an object
+- #todo: how many bytes per char, int, double, etc.?
+- Java automatically imports the `java.lang` package
+- class members: fields and methods
+- helper methods are private within a class and help the public methods
+- Not finding any programmer-defined constructor, the compiler generates a constructor with no arguments. Initializes ints to 0.
+
+```java
+   public CarRecord () {
+      yearMade = 0;
+      vehicleIdNum = -1;
+   }
+```
+
+- overload a constructor by making more than one with different signatures
+- error if no signatures match
+- must define a default constructor if created other constructors
+- variables (#todo: fields?) of a class data type are reference variables
+- when create object, allocates memory for its vars and returns a ref
+- implicit parameter: e.g. person1.method(), 'person' is the implicit parameter bc it stands for an object
+- within a member method, the implicitly-passed object is accessible via 'this'
+- `this` differentiates between a class field and a parameter name
+- reference to 'this' is passed implicitly
+  calling overloaded constructor using `this`:
+
+```java
+  public class ElapsedTime {
+   private int hours;
+   private int minutes;
+
+   // Overloaded constructor definition
+   public ElapsedTime(int timeHours, int timeMins) {
+      hours   = timeHours;
+      minutes = timeMins;
+   }
+   
+   // Default constructor definition
+   public ElapsedTime() {
+      this(0, 0);
+   }
+   
+   // Other methods ...
+}
+```
+
+  - `this(x, y)` in the body of the default constructor calls the overloaded constructor with the corresponding signature
+
+
+
+```java
+
+public class Cat extends Pet {
+  private int catSpaceNumber;
+
+  public Cat () {
+    catSpaceNumber = 0;
+  }
+
+  public int getCatSpaceNumber() {
+    return catSpaceNumber;
+  }
+
+  public void setCatSpaceNumber(int num) {
+    catSpaceNumber = num;
+  }
+
+}
+
+```
