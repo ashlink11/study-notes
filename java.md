@@ -201,6 +201,19 @@ int prefixNum = tmpVal % 1000; // % 1000 gets the right 3 digits, so 555.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 # chapter 2 notes
 
 terminology:
@@ -280,14 +293,32 @@ public class Cat extends Pet {
     catSpaceNumber = 0;
   }
 
+  public Cat (int catSpaceNumber) {
+    this.catSpaceNumber = catSpaceNumber;
+  }
+
   public int getCatSpaceNumber() {
     return catSpaceNumber;
   }
 
   public void setCatSpaceNumber(int num) {
     catSpaceNumber = num;
-  }
+  } 
 
 }
 
 ```
+
+
+
+
+
+
+
+
+
+
+# chapter 3 notes
+
+
+
