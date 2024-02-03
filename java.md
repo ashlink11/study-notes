@@ -320,5 +320,46 @@ public class Cat extends Pet {
 
 # chapter 3 notes
 
+- myDouble == 3.26 compiles but invalid : due to imprecision of floating-point representations, such comparisons may yield unexpected results.
+- myString == "Hello" compiles but invalid , unexpected results because of pointers 
+- look up order of precedence if needed
+- "For integral operand types such as int, & and | represent bitwise operators, which perform AND or OR on corresponding individual bits of the operands. Bitwise operators have highly-specialized usage, not common in beginning programs and not discussed here."
+- switch statements: go to the next statement if there's no break
+- cant use logical operators like AND and OR in switch cases
 
+- arrays are initialized with values of 0
+- NOTE PECULIARITY OF LANGUAGE: `.length` doesn't have () at the end because it's a property, not a method
+- post-increment vs pre-increment : i++ use first value then increment, or ++i increment first value then use incremented value BUT NOT IN THE CONTEXT OF LOOPS ACTUALLY
+- normal for-loop structure is with a < so it doesnt loop out of range
+
+### Strings
+
+- String comparison:
+  - dont use `==`
+  - use `str1.equals(str2)` and `!str1.equals(str2)`
+  - `str1.equalsIgnoreCase(str2)`
+  - `str1.compareToIgnoreCase(str2)`
+  - `str1.compareTo(str2)` `< 0` `== 0` `> 0` unicode values
+  - The `+` operator can return a new string that appends a string to another string. makes new string object. `s1.concat(s2)` is same and `str0 += str1` is same. they all use strings, not chars
+  - `.length()` is used for Strings
+  - use `==` for chars, e.g. `userInput.charAt(0) == firstLetter`
+
+- more String operations
+  - `str.indexOf()`  Item may be char, String variable, or string literal. returns `-1` if not in string
+    - `str.indexOf(item)` gets index of first item occurrence in a string, else -1. Item may be char, String variable, or string literal.
+    - `str.indexOf(item, indx)` starts at index indx.
+    - `str.lastIndexOf(item)` finds the last occurrence of the item in a string, else -1.
+  - `substring(startIndex)` (inclusive)
+  - `substring(startIndex, endIndex)` (`endIndex` not inclusive)
+  - `replace(findChar, replaceChar)` `replace(findStr, replaceStr)` so replace can use a char or String
+  - strings are immutable, so cannot change a char at an index, for example
+
+### Errors
+
+- Exception: runtime error: prints error message and terminates program
+
+### Characters
+
+- `Character` class
+- `Character.toLowerCase(userStr.charAt(6))` doesn't return error if the char is `?`, just returns `?`
 
