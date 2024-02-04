@@ -1,3 +1,10 @@
+# meta
+
+- statement: cannot be evaluated, but can be executed bc they are imperative instructions that perform an action or assign a value
+- expression: can be evaluated and result in single value
+- equation: expresses relationship between two expressions, asserting their equality; evaluating means finding the values of variables that make the equation true (only in math, not java)
+- function: is evaluated for each input, yielding the output
+
 # chapter 1 notes
 
 ```java
@@ -327,11 +334,6 @@ public class Cat extends Pet {
 - switch statements: go to the next statement if there's no break
 - cant use logical operators like AND and OR in switch cases
 
-- arrays are initialized with values of 0
-- NOTE PECULIARITY OF LANGUAGE: `.length` doesn't have () at the end because it's a property, not a method
-- post-increment vs pre-increment : i++ use first value then increment, or ++i increment first value then use incremented value BUT NOT IN THE CONTEXT OF LOOPS ACTUALLY
-- normal for-loop structure is with a < so it doesnt loop out of range
-
 ### Strings
 
 - String comparison:
@@ -354,12 +356,103 @@ public class Cat extends Pet {
   - `replace(findChar, replaceChar)` `replace(findStr, replaceStr)` so replace can use a char or String
   - strings are immutable, so cannot change a char at an index, for example
 
-### Errors
+### Errors & comments
 
 - Exception: runtime error: prints error message and terminates program
+- `// FIXME:` best practices for comments todo
+
 
 ### Characters
 
 - `Character` class
 - `Character.toLowerCase(userStr.charAt(6))` doesn't return error if the char is `?`, just returns `?`
 
+### Floats (doubles are floats too)
+
+- "Avoid `float1 == float2`. Reason: Some floating-point numbers cannot be exactly represented in the limited available memory bits like 64 bits. Floating-point numbers expected to be equal may be close but not exactly equal."
+- `Math.abs(x - y) < 0.0001` deemed equal
+- 0.0001 is a common epsilon
+- representations: 32-bit and 64-bit with sign, exponent, and mantissa
+- small floating points can be stored accurately, like 0.0, 2.0 or 0.25
+- for each number there is a nearest floating-point value with like 15 zeroes after the decimal before numbers other than 0
+
+### Loops
+
+- "A sentinel value is a special value indicating the end of a list"
+- loop expression is "the expression checked for whether to enter the loop body"
+- incrementing chars example:
+
+```java
+
+for(currentRow = 1; currentRow <= numRows; ++currentRow) {
+         char colChar = 'A';
+   for(currentColumn = 1; currentColumn <= numColumns; currentColumn++) {
+      System.out.print("" + currentRow + colChar + " ");
+      colChar++;
+   }
+}
+```
+output: `1A 1B 1C 2A 2B 2C 3A 3B 3C 4A 4B 4C 5A 5B 5C `
+
+- `break` only breaks one level of a nested loop
+- `continue` causes an immediate jump to the loop condition check (can improve readability)
+- both can avoid excessive indenting/nesting within a loop
+- don't use them too much though
+
+- enumeration type (enum) 
+  - set of named values
+  - named constants
+  - declares a new data type
+  - `public enum LightState {RED, GREEN, YELLOW, DONE};`
+
+```java
+public enum HVACStatus {OFF, ON, AUTO};
+HVACStatus systemStatus;
+systemStatus = HVACStatus.ON;
+```
+
+- static methods can only directly call static methods, i.e. main() can only directly call static methods, but has to call non-static methods indirectly using their object instances
+
+- unit testing: testing smallest units possible
+- to do this, create a testbench, i.e. test harness (separate program) to check for method returns
+- each unique set of input values is known as a test vector
+- a unit: a method (typically)
+- assert operator
+- `assert testExpression : detailedMessage;`
+
+```java
+   public static void main(String[] args) {
+      System.out.println("Testing started");
+
+      assert (hrMinToMin(0, 0) == 0) : "Assertion (hrMinToMin(0, 0) == 0) failed";
+      assert (hrMinToMin(0, 1) == 1) : "Assertion (hrMinToMin(0, 1) == 1) failed";
+      assert (hrMinToMin(0, 99) == 99) : "Assertion (hrMinToMin(0, 99) == 99) failed";
+      assert (hrMinToMin(1, 0) == 60) : "Assertion (hrMinToMin(1, 0) == 60) failed";
+      assert (hrMinToMin(5, 0) == 300) : "Assertion (hrMinToMin(5, 0) == 300) failed";
+      assert (hrMinToMin(2, 30) == 150) : "Assertion (hrMinToMin(2, 30) == 150) failed";
+      // Many more test vectors would be typical...
+
+      System.out.println("Testing completed");
+   }
+```
+
+- border cases: fringe scenarios. "For a method, border cases might include 0, a very large negative number, and a very large positive number."
+- e.g. three integer input method: "One might instead test dozens of normal cases, and perhaps ten or so border cases."
+
+- `do-while` loops: first executes the loop body's statements, then checks the loop condition
+
+```java
+do {
+   // Loop body
+} while (loopExpression);
+```
+
+
+
+# chapter 4 notes
+
+
+- arrays are initialized with values of 0
+- NOTE PECULIARITY OF LANGUAGE: `.length` doesn't have () at the end because it's a property, not a method
+- post-increment vs pre-increment : i++ use first value then increment, or ++i increment first value then use incremented value BUT NOT IN THE CONTEXT OF LOOPS ACTUALLY
+- normal for-loop structure is with a < so it doesnt loop out of range
