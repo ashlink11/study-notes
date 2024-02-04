@@ -456,3 +456,29 @@ do {
 - NOTE PECULIARITY OF LANGUAGE: `.length` doesn't have () at the end because it's a property, not a method
 - post-increment vs pre-increment : i++ use first value then increment, or ++i increment first value then use incremented value BUT NOT IN THE CONTEXT OF LOOPS ACTUALLY
 - normal for-loop structure is with a < so it doesnt loop out of range
+
+- `import java.util.ArrayList;`
+- `ArrayList<Integer> vals = new ArrayList<Integer>()`
+- ordered list of reference type items
+- each item is an element
+- doesn't support primitive types, but can use Integer, etc.
+- reference types are the opposite of primitive types
+- `add(elt)` `get(index)` `set(index, elt)` `size()`
+- other Collections are LinkedList, Set, Queue, Map, etc.
+
+- `for each` loop (enhanced for loop)
+
+```java
+for (String varThatGetsAssignedAValue : iterableTypes) {
+  System.out.println(playerName);
+}
+```
+
+- common error: "Modifying the loop variable in an enhanced for loop does not modify the array elements."
+- iterable reference types include arrays and collections (lists, sets, maps, etc.), and they implement the `Iterable` interface
+- arrays are reference types that can hold primitive types
+- an interface is a reference type (#todo: ???)
+- The primitive types in Java are `int, long, short, byte, float, double, char, and boolean` (not collections and not iterable) - to iterate over you would use an array of that primitive type or a wrapper from `java.util`
+- 
+- you can pass a `Scanner` from `main()` as an argument (it can be a parameter for a method)
+- 
