@@ -695,3 +695,25 @@ public class Pet {
 }
 
 ```
+
+
+# chapter 5 notes
+
+- derived class = subclass = child class
+- base class = superclass = parent class
+- the `protected` modifier provides access to derived classes and all classes in the same package (only)
+- no modifier (`[default]` modifier): "Accessible by self and other classes in the same package." (i.e. "`[package-private]`")
+- use `[package-private]` when creating class definitions instead of protected
+- "Protected is not a valid specifier for class definitions and will produce an error."
+- a derived class can override a base class's methods if they have an identical signature using `@Override` "so the compiler verifies that an identical base class method exists".
+- `@Override` is an annotation that helps compiler
+- overloading has different method signatures, i.e. same number of parameters but different parameter types
+- "the `super` keyword is a reference variable used to call the parent class's methods or constructors"
+`super.methodCall()`; if `methodCall()` is `@Override`
+- infinite loop if you forget super because overridden method call would keep calling itself 
+- you can also write other code in an an overridden derived class method other than calling `super.methodCall()`
+- Object class is different than an object
+- Object class has `toString()` and `equals(otherObject)`
+- "by default, toString() returns a String containing the object's class name followed by the object's hash code in hexadecimal form. Ex: `java.lang.Object@372f7a8d`"
+- `equals(otherObject)` compares the references, not the objects' contents
+- Integer overrides `toString()` to return an `Integer` (?)
