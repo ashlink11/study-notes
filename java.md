@@ -5,6 +5,45 @@
 - equation: expresses relationship between two expressions, asserting their equality; evaluating means finding the values of variables that make the equation true (only in math, not java)
 - function: is evaluated for each input, yielding the output
 
+- OOP composition
+  - modular, reusable, maintainable, loosely-coupled
+  - uses abstract classes
+  - not monolithic
+- functional composition
+  - compose `f(x)` and `g(x)` to `h(x) = f(g(x))`
+
+https://blog.sigma-star.io/2024/01/people-dont-understand-oop/ (#todo: read more)
+- classes, prototypes and structs can create objects (OOP)
+  - languages with objects:
+    - javascript
+    - python
+    - typescript
+    - java
+    - c#
+    - c++
+    - (not C)
+    - Go
+    - Rust
+    - Kotlin
+    - Ruby
+- subtyping:
+  - Javascript: inheritance and duck typing
+  - Python: ","
+  - TypeScript: ",", and structural typing
+  - Java: inheritance and nominal typing
+  - C#: ","
+  - C++: ",", and structural typing (concepts)
+  - C: n/a
+  - Go: structural typing
+  - Rust: extension traits & nominal typing
+  - Kotlin: inheritance, nominal typing
+  - Ruby: inheritance, duck typing
+- explanation of concepts:
+  - structural typing: compatibility is based on presence of methods/properties regardless of explicit declarations
+  - duck typing: pretty similar^ and doesn't use inheritance
+  - nominal typing: compatibility is determined by explicit type names 
+  
+
 # chapter 1 notes
 
 ```java
@@ -447,6 +486,28 @@ do {
 } while (loopExpression);
 ```
 
+### discussion post:
+
+There are four fundamental object-oriented (OOP) design principles: inheritance, encapsulation, abstraction, and polymorphism. 
+
+An important idea in programming to prevent repeating code, so using inheritance (‘extends’) to create a sub-class prevents rewriting certain fields and methods, etc. Another way to prevent repeating code is with polymorphism, so you can use multiple different types as arguments and/or return values for a method. Less repetition means more reuse and more maintainability.
+
+Other than preventing repetition of code, a second important programming idea is to simplify and work at a higher level of abstraction without too many complex details. Abstract classes use abstraction to define methods but not implement them, so the programmer can think on a higher level when designing a subclass. Encapsulation also allows programmers to avoid accidentally changing certain code that is either private or protected and work at a higher-level without being distracted by irrelevant details. 
+
+Other than those important coding ideas, the four OOP principles work in other ways to make good applications. Encapsulation helps prevent side effects like changing fields you didn’t mean to, which makes the code more maintainable. Abstract classes depend on inheritance so their subclasses can be implemented. Polymorphism uses inheritance and method overloading to achieve dynamic types during the JVM compiler runtime. This means less code and therefore, more maintainable code.
+
+The most interesting and also the think I need to learn more about in this class is polymorphism. It’s amazing that we can use multiple types in one method (I think). I would love to learn more about how the dynamic runtime works in the JVM.
+
+- OOP composition: modular, not monolithic
+
+I learned from you that polymorphism makes things adaptable. I hadn't thought of it like that I appreciate that you explained it in the clearest way possible so I could understand the high-level concept. I agree that it does mean that the compiler can adapt to different types during static binding and dynamic binding.
+
+I find it interesting that you can distill the concepts into their most abstract forms, which must be helpful for your studies and coding.
+
+I learned from you that a great application of inheritance would be for a video game with different main classes and specialized sub-classes of characters. Thanks for the example. Polymorphism started to make more sense when you explained it like that. I hadn't realized that polymorphism relates to both 'extends' and 'implements'. Thanks again.
+
+I found it really interesting that you explained the OOP concept via an example, since I didn't think to use any examples in my post.
+
 
 
 # chapter 4 notes
@@ -482,3 +543,155 @@ for (String varThatGetsAssignedAValue : iterableTypes) {
 - 
 - you can pass a `Scanner` from `main()` as an argument (it can be a parameter for a method)
 - 
+
+
+### Project One
+
+```java
+/**
+ * This class can be used to create an 
+ * object of type Pet.
+ * 
+ * It does not implement any interfaces
+ * or extend any classes (other than the
+ * implicit inheritance of the Object class.)
+ * 
+ * This class can be extended by a 
+ * sub-class.
+ */
+public class Pet {
+  /**
+   * Declares private member variables that will
+   * be a unique set of values for an object 
+   * instance if one is created using this class 
+   * or a sub-class.
+   *  
+   * This section does not initialize the 
+   * variables because a constructor would do 
+   * that instead.  
+   */
+  private String petType;
+  private String petName;
+  private int petAge;
+  private int daysStay;
+  private double amountDue;
+
+  /**
+   * These static member variables belong to
+   * the class and not any instance. 
+   */ 
+  private static int dogSpaces;
+  private static int catSpaces;
+
+  /**
+   * A Pet constructor with no parameters. It calls
+   * the Pet constructor with five parameters and 
+   * initializes all the fields to default values.
+   */ 
+  public Pet () {
+    this(null, null, 0, 0, 0.0);
+  }
+
+  /**
+   * This constructor is used if an employee has asked
+   * a customer for the petType without knowing if
+   * there is currently room for the pet to stay at
+   * Pet BAG. The employee won't ask for more info
+   * if there is no available space. But it's still 
+   * useful business information because Pet BAG
+   * is interested in maybe raising their capacity 
+   * eventually.
+   * 
+   * It calls the Pet constructor with five parameters
+   * but does include the petType instead of 'null'
+   * like the default constructor.
+   */ 
+  public Pet (String type) {
+    this(type, null, 0, 0, 0.0);
+  }
+
+  /**
+   * This constructor has parameters corresponding
+   * to all the possible information for private 
+   * member variables of a Pet object.
+   */ 
+  public Pet (String type, String name, int age, int days, double amount) {
+    petType = type;
+    petName = name;
+    petAge = age;
+    daysStay = days;
+    amountDue = amount;
+  }
+
+  /**
+   * The following methods are all sets of getters
+   * and setters. Two sets are static and use the
+   * class global variables, and the remaining five
+   * sets are not static and use `this` to get the
+   * reference to the object instance that would
+   * call the getter/setter. 
+   * 
+   * All of these methods are public, whereas all 
+   * the variables they access are private, which
+   * follows the Java best practices of encapsulation.
+   */
+
+  public String getPetType() {
+    return this.petType;
+  }
+
+  public void setPetType(String petType) {
+    this.petType = petType;
+  } 
+
+  public String getPetName() {
+    return this.petName;
+  }
+
+  public void setPetName(String petName) {
+    this.petName = petName;
+  } 
+
+  public int getPetAge() {
+    return this.petAge;
+  }
+
+  public void setPetAge(int petAge) {
+    this.petAge = petAge;
+  } 
+
+  public static int getDogSpaces() {
+    return dogSpaces;
+  }
+
+  public static void setDogSpaces(int spaces) {
+    dogSpaces = spaces;
+  } 
+
+  public static int getCatSpaces() {
+    return catSpaces;
+  }
+
+  public static void setCatSpaces(int spaces) {
+    catSpaces = spaces;
+  } 
+
+  public int getDaysStay() {
+    return this.daysStay;
+  }
+
+  public void setDaysStay(int daysStay) {
+    this.daysStay = daysStay;
+  } 
+
+  public double getAmountDue() {
+    return this.amountDue;
+  }
+
+  public void setAmountDue(double amountDue) {
+    this.amountDue = amountDue;
+  } 
+
+}
+
+```
