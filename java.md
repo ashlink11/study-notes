@@ -565,10 +565,42 @@ for (String varThatGetsAssignedAValue : iterableTypes) {
 - `equals(otherObject)` compares the references, not the objects' contents
 - Integer overrides `toString()` to return an `Integer` (?)
 
+- Is-a versus has-a relationships
+  - Composition: one object can be made of other sub-object attribute/member variables (has-a)
+  - Inheritance: extending classes (is-a) 
 - Unified Modeling Language (UML) diagrams are for class inheritance relationships
+  - `#` protected
+  - `-` private
+  - `+` public
+
+- static main and objects
+  - static main can't directly call an instance method, but main can call the object, which then calls its member method, etc.
+  - a constructor technically is an instance method too
+- "Regression testing means to retest an item like a class anytime that item is changed; if previously-passed test cases fail, the item has "regressed". Regression testing means to check if a change to an item caused previously-passed test cases to fail."
+
+
+## polymorphism: determining which code to execute depending on data types
+- method overloading is a form of compile-time polymorphism (uses the methods arguments to determine the signature)
+- runtime polymorphism: determination is made while program is running
+- derived/base class reference conversion: e.g. if you're adding a SpecificItem to an ArrayList of GenericItems, the reference is converted to the base class reference without explicit casting 
+- explicit casting is for double to int for example bc you have to explicitly do it to avoid an error
+- that reference conversion is just for adding to an ArrayList for example but the original reference is retained so the proper overloaded methods can be called during runtime polymorhpism (I guess the compiler doesnt know it ahead of time, although I feel like it could #todo)
+
+## class generics / generic classes
+- class definition has a special type parameter that may be used in place of types in the class
+- `public class TripleItem <TheType extends Comparable<TheType>> { ... }`
+- a variable declared of the generic class type must indicate a specific types
+- in `<TheType>`, `TheType` is the type parameter
+- 
+
+
+
+
+
+
+
+
 - a class with `main()` can be called `Driver.java`
-
-
 
 # Milestone 5 --> Project 2
 
