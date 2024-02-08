@@ -594,7 +594,160 @@ for (String varThatGetsAssignedAValue : iterableTypes) {
 - 
 
 
+## Module 5 lab
 
+- `ItemToPurchase.java` 
+- `ShoppingCartPrinter.java` // Driver example
+- input:
+```
+Apple
+1
+3
+Orange
+2 
+4 
+```
+
+```java
+public class ItemToPurchase {
+   //Private fields - itemName, itemPrice, and itemQuanity
+   private String itemName;
+   private int itemPrice;
+   private int itemQuantity;
+   
+      /*Default Constructor
+    itemName - Initialized to "none"
+    itemPrice - Initialized to 0
+    itemQuantity - Initialized ito 0
+   */
+   public ItemToPurchase() {
+      itemName = "none";
+      itemPrice = 0;
+      itemQuantity = 0;
+   }
+   
+
+   //public member methods (mutators & accessors)
+   
+   //setName() & getName() 
+   
+      public void setName(String itemName) {
+      this.itemName = itemName;  
+   }
+   
+   public String getName() {
+      return this.itemName;  
+   }
+   
+   //setPrice() & getPrice() 
+   
+   public void setPrice(int itemPrice) {
+      this.itemPrice = itemPrice;  
+   }
+   
+   public int getPrice() {
+      return this.itemPrice;  
+   }
+   //setQuantity() & getQuantity() 
+   
+   public void setQuantity(int itemQuantity) {
+      this.itemQuantity = itemQuantity;  
+   }
+   
+   public int getQuantity() {
+      return this.itemQuantity;  
+   }
+   
+   //print item to purchase
+   
+   public void printItemPurchase() {
+      System.out.println(itemName + " " + itemQuantity + " @ $" + itemPrice +  
+                         " = $" + (itemPrice * itemQuantity));
+   }
+}
+
+```
+
+
+```java
+import java.util.Scanner;
+
+public class ShoppingCartPrinter {
+   public static void main(String[] args) {
+      Scanner scnr = new Scanner(System.in);
+      int i = 0;
+      String productName;
+      int productPrice = 0;
+      int productQuantity = 0;
+      int cartTotal = 0;
+      
+  
+      ItemToPurchase item1 = new ItemToPurchase();
+      ItemToPurchase item2 = new ItemToPurchase();
+      
+      
+      // Get item 1 details from user, create itemToPurchase object
+      
+      System.out.println("Item 1");
+      
+      System.out.println("Enter the item name: ");
+      productName = scnr.nextLine();
+      item1.setName(productName);
+               
+      System.out.println("Enter the item price: ");
+      productPrice = scnr.nextInt();
+      item1.setPrice(productPrice);
+            scnr.nextLine();
+            
+      System.out.println("Enter the item quantity: ");
+      productQuantity = scnr.nextInt();
+      item1.setQuantity(productQuantity);
+            scnr.nextLine();
+ 
+       
+      System.out.println("");
+      
+ 
+ 
+      // Get item 2 details from user, create itemToPurchase object
+
+      System.out.println("Item 2");
+      
+      System.out.println("Enter the item name: ");
+      productName = scnr.nextLine();
+      item2.setName(productName);
+            
+      System.out.println("Enter the item price: ");
+      productPrice = scnr.nextInt();
+      item2.setPrice(productPrice);
+            scnr.nextLine();
+            
+      System.out.println("Enter the item quantity: ");
+      productQuantity = scnr.nextInt();
+      item2.setQuantity(productQuantity);
+      
+      // Add costs of two items and print total
+      // cartTotal = item one price + item two price
+      // Totoal Cost
+      // item one information
+      // item two information
+      // Total output
+      
+      System.out.println("");
+      
+      System.out.println("TOTAL COST");
+      item1.printItemPurchase();
+      item2.printItemPurchase();
+      cartTotal = ((item1.getPrice() * item1.getQuantity()) 
+               + (item2.getPrice() * item2.getQuantity()));
+      
+      System.out.println("");
+             
+      System.out.println("Total: $" + cartTotal);
+      return;
+   }
+}
+```
 
 
 
