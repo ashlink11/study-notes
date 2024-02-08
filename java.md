@@ -567,4 +567,32 @@ for (String varThatGetsAssignedAValue : iterableTypes) {
 
 - Unified Modeling Language (UML) diagrams are for class inheritance relationships
 - a class with `main()` can be called `Driver.java`
-- 
+
+
+
+# Milestone 5 --> Project 2
+
+```java
+import java.utils.Scanner;
+
+public class Driver () {
+
+  public static void main(args[]) {
+    boolean done = false;
+    String input;
+    Scanner scnr = new Scanner(System.in);
+    ArrayList<Monkey> monkeys = new ArrayList<Monkey>();
+
+    while (!done) {
+      displayMenu();
+      input = scnr.next();
+      // input validation &/or error messages
+      // go to intakeNewMonkey();
+    }
+    
+
+  }
+
+}
+
+```
