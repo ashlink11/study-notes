@@ -591,8 +591,49 @@ for (String varThatGetsAssignedAValue : iterableTypes) {
 - `public class TripleItem <TheType extends Comparable<TheType>> { ... }`
 - a variable declared of the generic class type must indicate a specific types
 - in `<TheType>`, `TheType` is the type parameter
-- 
+- "A key advantage of generic classes is relieving the programmer from having to write redundant code that differs only by type."
+- `public class ClassName <Type1 extends BoundType1, Type2 extends BoundType2> {...}`
+- type bounds:
+  - upper bound: `<T extends Number>` "In this example, T must be a subtype of Number."
+  - lower bound: `List<? super T> list` "In this method, list must be a list of a type that is a supertype of T."
+- generic methods too
+  - `public static <TheType extends Comparable<TheType>> TheType tripleMin(TheType item1, TheType item2, TheType item3) {...}`
+  - in this example `TheType` is just one type used multiple times in the sig
 
+```java
+public class Pair <T extends Comparable<T>> {
+   private T item1;
+   private T item2;
+
+   public Pair(T i1, T i2) {
+      item1 = i1;
+      item2 = i2;
+   }
+
+   public T chooseItem() {
+      T chosenItem;
+
+      if (item1.compareTo(item2) > 0) { 
+         chosenItem = item1;
+      }
+      else {
+         chosenItem = item2;
+      }
+      return chosenItem;
+   }
+}
+public class PairManager {
+   public static void main(String[] args) {
+      Pair<Integer> twoInts = new Pair<Integer>(37, 31); 
+      Pair<Double> twoDbls = new Pair<Double>(42.3, 41.5);
+      Pair<Character> twoChars = new Pair<Character>('k', 'b');
+
+      System.out.println(twoInts.chooseItem());
+      System.out.println(twoDbls.chooseItem());
+      System.out.println(twoChars.chooseItem());
+   }
+}
+```
 
 ## Module 5 lab
 
