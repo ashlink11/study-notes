@@ -822,3 +822,62 @@ public class Driver () {
 }
 
 ```
+
+# chapter 6
+
+- Input/Output: 
+  - OutputStream and System.out
+  - InputStream and System.in
+  - output formatting
+  - streams using strings
+  - file input and output
+  - using scanner in methods
+- Exceptions and Debugging: 
+  - Parameter error checking
+  - errors and warnings
+  - exception basics
+  - exceptions with methods
+  - multiple handlers
+  - exception handling in file input/output
+  - debugging recursion
+  - debugging example: reversing an array
+
+- `OutputStream` is a class that supports output. `OutputStream` provides several overloaded methods for writing a sequence of bytes to a destination. That sequence is normally placed into a buffer, and the system then outputs the buffer at various times.
+- The `print()` and `println()` methods are overloaded in order to support the various standard data types, such as `int`, `boolean`, `float`, etc., each method converting that data type to a sequence of characters. also support reference types
+- `System.out` is an `OutputStream` object reference
+- `.out` variable comes from `class System { PrintStream out; ... }`
+- overloaded: `class PrintStream extends OutputStream { ... @Overrides public print() and println() }` // no import statement required
+- buffer: temp storage memory region
+- `InputStream` overloaded `read()` methods which extracts bytes
+- byte stream: 8-bits input/output
+  - `System.in` is an input byte stream. `read()` reads the first byte ASCII value available from buffer then returns it as an int (instead of byte). if data is no longer avail: `return -1;`
+- throws clause: must use `throws IOException` to `main()` 
+  - e.g. read error from buffer
+- `Scanner` class is a wrapper that augments `System.in` by automatically scanning a sequence of bytes and converting those bytes to the desired data type, e.g. `nextInt()`
+
+
+- `printf()` and `format()` are equivalent
+  - first arg: format string along w any placeholders (format specifiers - begins with `%`)
+  - `%d` integer and `%s` String
+  - e.g. `System.out.printf("The %s account saved you $%f over %d years\n", account, total, years);`
+  - see format specifier chart 
+  - see floating-point formatting chart for more details including sub-specifiers for after decimals points, etc.
+  - see integer formatting chart
+  - see String formatting chart
+
+
+- flushing output
+- to preserve resources, the system may wait until the buffer is full or a certain number full
+- `System.out.flush()` prevents waiting for the system
+- `print()` is not outputting a newline character, so the output is placed in the buffer without flushing.
+- `println()` outputs a newline character at the end of the output, so the output is placed in the buffer and then flushed. write `flush()` on the next line to flush the output.
+- `print()` outputs a newline character at the end because the String literal ends with `\n`, so the output is placed in the buffer and then flushed.
+
+
+- input string stream: `Scanner` object initialized from a `String` 
+- `Scanner inString = new Scanner(lineString); // can use e.g., next(), nextInt(), nextDouble(), etc.`
+- line by line is typical
+- `import java.io.StringWriter; import java.io.PrintWriter`
+- To create a PrintWriter object, the program must first create a StringWriter, passing the StringWriter object to the constructor for the PrintWriter. Once the PrintWriter object is created, a program can insert characters into that stream using print() and println(). The program can then use the StringWriter's toString() method to copy that buffer to a String.
+- Notice that the PrintWriter object provides the print() and println() methods for writing to the stream, and the StringWriter object provides the toString() method for getting the resulting String.
+- 
