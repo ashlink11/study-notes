@@ -880,4 +880,92 @@ public class Driver () {
 - `import java.io.StringWriter; import java.io.PrintWriter`
 - To create a PrintWriter object, the program must first create a StringWriter, passing the StringWriter object to the constructor for the PrintWriter. Once the PrintWriter object is created, a program can insert characters into that stream using print() and println(). The program can then use the StringWriter's toString() method to copy that buffer to a String.
 - Notice that the PrintWriter object provides the print() and println() methods for writing to the stream, and the StringWriter object provides the toString() method for getting the resulting String.
-- 
+
+#### files
+
+- The statement `fileByteStream = new FileInputStream(str);` creates a file input stream and opens the file denoted by a String variable, str, for reading. `FileInputStream`'s constructor also allows a programmer to pass the filename as a String literal. Ex: `fileByteStream = new FileInputStream("numFile.txt");`
+- `if (inFS.(hasNextInt()) { ... }`
+- `inFS.nextLine()`
+- Data from the file is read into a class's object, and each object is stored into an `ArrayList`.
+- `FileOutputStream` constructor takes a String for a file name as an arg
+  
+```java
+FileOutputStream outputStream = new FileOutputStream("outfile.txt");
+PrintWriter outFS = null;
+outFS = new PrintWriter(outputStream);
+```
+
+- `FileNotFoundException` thrown if file can't be opened
+- The file is created on disk when successfully opened by the `FileOutputStream` constructor. The file may be empty if closed immediately, but will still exist on disk.
+- The file may remain open and thus may be inaccessible to other applications until the `FileOutputStream` is closed.
+
+```java
+import java.io.PrintWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class HTMLFileWriteSample {
+  static void writeHTMLFile(PrintWriter printer, String innerHTML) {
+     printer.println("<!DOCTYPE html>");
+     printer.println("<html>");
+     printer.println("  <body>");
+     printer.println("    <p>" + innerHTML + "</p>");
+     printer.println("  </body>");
+     printer.println("</html>");
+  }
+  public static void main(String[] args) throws IOException {
+     // Open an output file stream and create a PrintWriter
+     FileOutputStream fileStream = new FileOutputStream("simple.html");
+     PrintWriter filePrinter = new PrintWriter(fileStream);
+  
+     // Write the HTML file, then close filePrinter
+     writeHTMLFile(filePrinter, "Hello <b>HTML</b> world!");
+     filePrinter.close();
+
+     // Use the same function, writeHTMLFile, to write to the console
+     PrintWriter systemOutPrinter = new PrintWriter(System.out);
+     writeHTMLFile(systemOutPrinter, "Hello <b>HTML</b> world!");     
+     systemOutPrinter.close();
+  }
+}
+```
+
+- A `PrintWriter` can be constructed from any `OutputStream`.
+- A `PrintWriter` can be created from either `fileStream` or `System.out` because `System.out` is an instance of `PrintStream` and `fileStream` is an instance of `FileOutputStream`. Both `PrintStream` and `FileOutputStream` inherit from `OutputStream`.
+- A `FileOutputStream`'s methods only allow writing bytes. The `PrintWriter` does the work of converting strings and other common data types to byte arrays that are written to the file.
+- Multiple `Scanner`s can interfere with each other: The first call to a `readInt()` will return and `int`. A second call to it may not always return an `int` because the first `Scanner` may have read more input than needed. ex input: `"7 4"`
+  
+
+#### input validation
+
+- `InputMismatchException`
+- `1,000` is a valid integer and `1,0` is not
+- `try` block // exits if code throws an exception
+- `catch` block (exception handler)
+  - catches the exception
+  - "If the thrown exception's type matches the catch block's parameter type, the code within the catch block executes."
+
+```java
+catch (Exception e) {
+        System.out.println("Error");
+     }
+```
+
+- throwing: `throw new Exception("Invalid date.");`
+- `System.out.println(excpt.getMessage());`
+- `0.0 / 0.0` evaluates to `NaN`. The floating-point ratio `0.0 / 0.0` does not throw an exception, but instead evaluates to `NaN`.
+- can throw multiple exceptions in a row
+- throws clause: 
+  - `public static void method() throws Exception { ... }`
+  - `throws Exception, FileNotFoundException`
+- checked exception: can anticipate and handle
+- unchecked exception: caused by hardware or logic errors that you cant typically anticipate and handle
+- catch or specify requirement: "requires methods to either catch a checked exception using a catch block, or specify that the method throws the checked exception using a throws clause"
+- common unchecked exceptions: (don't have to be caught)
+  - `NullPointerException`
+  - `IndexOutOfBoundsException`
+  - `ArithmeticException`
+  - `IOError`
+  - `ClassCastException`
+  - `IllegalArgumentException`
+- The throws clause must specify all checked exceptions.
