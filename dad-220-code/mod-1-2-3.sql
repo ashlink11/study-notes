@@ -4,3 +4,8 @@ insert into Customers (CustomerID, FirstName, LastName, Street, City, State, Zip
 
 alter table description rename details;
 
+create view Collaborator as select CustomerID as CollaboratorID, FirstName AS FirstName, LastName as LastName, Street as Street, City as City, State as State, ZipCode as ZipCode, Telephone as Telephone from Customers;
+
+describe Collaborator;
+
+select * from Collaborator limit 5;
