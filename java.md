@@ -969,3 +969,29 @@ catch (Exception e) {
   - `ClassCastException`
   - `IllegalArgumentException`
 - The throws clause must specify all checked exceptions.
+
+
+# chapter 7
+
+common block tags used in Java documentation comments:
+
+```java
+/**
+@param: Describes a parameter of a method.
+@return: Describes the return value of a method.
+@throws or @exception: Describes exceptions that a method can throw.
+@see: Provides references to other classes, methods, or fields.
+@deprecated: Marks a class, method, or field as deprecated.
+@since: Indicates the version of the software when the element was introduced.
+@author: Specifies the author of the class or method.
+@version: Specifies the version of the class or method.
+*/
+```
+
+# chapter 8
+
+- be careful when deciding between using an abstract class and simply inheritance hierarchy with a superclass
+- "although inheritance and polymorphism allow a class to override methods defined in the superclass, a class can only inherit from a single superclass. but, a class can implement multiple interfaces"
+- "An interface provides only static final fields. Interfaces can declare public static final fields and don't restrict a class' inheritance."
+- "Only abstract classes can provide variables/fields to the subclasses."
+- "An interface provides an API that must be implemented and no other code. An interface does not restrict future inheritance, so is the best choice if no other code is provided."
